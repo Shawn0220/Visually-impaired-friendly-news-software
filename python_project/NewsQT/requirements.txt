@@ -1,0 +1,11 @@
+future==0.18.2
+Keras==2.2.5
+numpy==1.16.0
+openpyxl==3.0.7
+pandas==0.25.1
+PyQt5==5.14.1
+regex==2021.3.17
+tensorboard==1.14.0
+tensorflow==1.14.0
+tensorflow-gpu==1.14.0
+xlrd==2.0.1
