@@ -1,0 +1,73 @@
+{
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#7ED321",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "position": "bottom",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "主页",
+        "iconPath": "static/images/tabBar/home-o.png",
+        "selectedIconPath": "static/images/tabBar/home-green.png"
+      },
+      {
+        "pagePath": "pages/categories/categories",
+        "text": "分类",
+        "iconPath": "static/images/tabBar/application-o.png",
+        "selectedIconPath": "static/images/tabBar/application-green.png"
+      },
+      {
+        "pagePath": "pages/more/more",
+        "text": "更多",
+        "iconPath": "static/images/tabBar/camera-o.png",
+        "selectedIconPath": "static/images/tabBar/camera-green.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "static/images/tabBar/user-o.png",
+        "selectedIconPath": "static/images/tabBar/user-green.png"
+      }
+    ]
+  },
+  "pages": [
+    "pages/index/index",
+    "pages/categories/categories",
+    "pages/more/more",
+    "pages/logs/logs",
+    "pages/user/user",
+    "pages/articleView/articleView",
+    "pages/categoryDetail/categoryDetail",
+    "pages/more/photoRead/photoRead",
+    "pages/more/identification/identification",
+    "pages/user/browseHistory/browseHistory",
+    "pages/user/starHistory/starHistory",
+    "pages/user/userInfo/userInfo"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {
+    "articleItem": "/components/articleItem/articleItem",
+    "categoryItem": "/components/categoryItem/categoryItem",
+    "searchItem": "/components/searchItem/searchItem",
+    "van-loading": "@vant/weapp/loading/index",
+    "van-skeleton": "@vant/weapp/skeleton/index",
+    "van-tag": "@vant/weapp/tag/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index"
+  }
+}

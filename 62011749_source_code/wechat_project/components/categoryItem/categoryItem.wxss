@@ -1,0 +1,34 @@
+/* components/categoryItem/categoryItem.wxss */
+.categoryItem {
+  min-height: 150rpx;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+}
+.categoryImage {
+  display: inline-block;
+  width: 150rpx;
+  height: 150rpx;
+}
+.categoryData {
+  display: inline-block;
+  margin-left: 5%;
+}
+.categoryName{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 50rpx;
+}
+.detail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2%;
+  width: 450rpx;
+  font-size: 5%;
+  font-weight: 100;
+}

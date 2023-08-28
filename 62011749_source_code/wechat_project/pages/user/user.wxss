@@ -1,0 +1,60 @@
+/**user.wxss**/
+page {
+  background-color: #8CE48C;
+}
+.mainView {
+  padding: 0% 2%;
+  height: 1000rpx;
+  font-size: 50rpx;
+  font-weight: 600;
+}
+.user-info {
+  margin: 10% 2% 0% ;
+  height: 300rpx;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+}
+.user-img {
+  display: inline;
+}
+.image {
+  width: 120rpx;
+  height: 120rpx;
+}
+.user-name {
+  margin-left: 10%;
+  font-size: 50rpx;
+  display: inline;
+}
+.function-item {
+  height: 150rpx;
+  margin-top: 5%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+}
+.my-icon {
+  display: inline;
+}
+.my-text {
+  display: inline;
+  margin-left: 5%;
+}
+.viewEnd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5% 0%;
+  border-radius: 10rpx;
+  background-color: rgb(140, 228, 140);
+  font-size: 40rpx;
+}
+.focusOn {
+  background-color: #e25e3c;
+  color: #FFFFFF;
+}

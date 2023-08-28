@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.hhu.lewen.dao.mapper.NewsMapper" >
+  <!--
+        这里是自动生成的resultMap,用于映射对象时,数据库列名与对象名不一一对应时,而存在的解决方案
+        即把列名与映射对象的属性名一一对应起来,使得可以实现列名与对象名不一致也一样可以映射
+        注意:
+          因为都是逆向工程生成的,我们必须遵循一些规则:
+          1. 数据库表的列名是单个单词时, 实体类对象的属性会与列名同名
+          2. 数据库表的列名是多个单词且用_连接时,例如user_name,  实体类对象的属性会依照驼峰命名法删除_,例如userName
+          3. 数据库表的列名是多个单词且直接连接时,例如userName,username , 实体类对象的属性会全小写,例如username
+
+          因为属性名不采取驼峰命名法是不合理的, 所以要尽量避免第三种情况
+   -->
+
+
+<!--  column 要与数据库字段一模一样   而property是JavaBean的属性名-->
+    <resultMap id="NewsResultMap" type="cn.hhu.lewen.dao.pojo.News"  >
+      <id column="new_id" property="newId" jdbcType="INTEGER"  />
+      <result column="new_title" property="newTitle" jdbcType="VARCHAR" />
+      <result column="new_abstract" property="newAbstract" jdbcType="VARCHAR" />
+      <result column="new_content" property="newContent" jdbcType="VARCHAR" />
+      <result column="writer_id" property="writerId" jdbcType="INTEGER" />
+      <result column="writer_account" property="writerAccount" jdbcType="VARCHAR" />
+      <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+      <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+      <result column="tags" property="tags" jdbcType="VARCHAR" />
+      <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+      <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+      <result column="views" property="views" jdbcType="INTEGER" />
+      <result column="stars" property="stars" jdbcType="INTEGER" />
+      <result column="weight" property="weight" jdbcType="INTEGER" />
+      <result column="title_voice" property="titleVoice" jdbcType="VARCHAR" />
+      <result column="ifStar" property="ifStar" jdbcType="INTEGER" />
+      <result column="view_time" property="viewTime" jdbcType="TIMESTAMP" />
+      <result column="star_time" property="starTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+
+    <resultMap id="entity2newMap" type="cn.hhu.lewen.dao.pojo.test"  >
+        <result column="new_id" property="newId" jdbcType="INTEGER"  />
+        <result column="entity" property="entity" jdbcType="VARCHAR" />
+
+    </resultMap>
+
+<!-- 按给的推荐的newId数组找文章 -->
+    <select id="getArticlesByNewIdArray" resultMap="NewsResultMap" parameterType="cn.hhu.lewen.dao.pojo.ForSearch">
+        select DISTINCT
+        news.new_id,news.new_title,news.new_abstract,news.new_content
+        ,news.writer_id,author.writer_account,author.nickname
+        ,news.create_date,news.tags,news.category_id,category.category_name
+        ,news.views,news.stars,news.weight,news.title_voice
+        ,IF((SELECT count(1) FROM starinformation where news.new_id = starinformation.new_id and starinformation.user_id = #{userId} limit 1 ),1,0) as ifStar
+
+        from entity2new,news,author,category
+        where entity in
+        <foreach collection="entities" item="entity" index="index" open="(" close=")" separator=",">
+            #{entity}
+        </foreach>
+        and category.category_id = news.category_id  and author.writer_id = news.writer_id and entity2new.new_id=news.new_id
+        order by ifStar desc, news.weight desc, news.new_id asc
+    </select>
+
+
+<!--    摘要关键词模糊搜索-->
+
+    <select id="getArticlesByAbstract" resultMap="NewsResultMap" parameterType="cn.hhu.lewen.dao.pojo.ForSearch">
+        select DISTINCT
+            news.new_id,news.new_title,news.new_abstract,news.new_content
+             ,news.writer_id,author.writer_account,author.nickname
+             ,news.create_date,news.tags,news.category_id,category.category_name
+             ,news.views,news.stars,news.weight,news.title_voice
+             ,IF((SELECT count(1) FROM starinformation where news.new_id = starinformation.new_id and starinformation.user_id = #{userId} limit 1 ),1,0) as ifStar
+
+        from news,author,category
+        where news.new_abstract like concat('%',#{keyword},'%')
+
+          and category.category_id = news.category_id  and author.writer_id = news.writer_id
+        order by ifStar desc, news.weight desc, news.new_id asc
+    </select>
+
+
+<!--作者名模糊搜索-->
+    <select id="getArticlesByWriterName" resultMap="NewsResultMap" parameterType="cn.hhu.lewen.dao.pojo.ForSearch">
+
+        select DISTINCT
+        news.new_id,news.new_title,news.new_abstract,news.new_content
+        ,news.writer_id,author.writer_account,author.nickname
+        ,news.create_date,news.tags,news.category_id,category.category_name
+        ,news.views,news.stars,news.weight,news.title_voice
+        ,IF((SELECT count(1) FROM starinformation where news.new_id = starinformation.new_id and starinformation.user_id = #{userId} limit 1 ),1,0) as ifStar
+
+        from news,author,category
+        where
+        (
+        <foreach collection="entities" item="entity" index="index" open="" close="" separator="or">
+            concat(author.nickname,news.new_title) like
+              concat('%',#{entity},'%')
+          </foreach>
+        )
+        and category.category_id = news.category_id  and author.writer_id = news.writer_id
+        order by ifStar desc, news.weight desc, news.new_id asc
+
+
+    </select>
+
+<!--    实体精确搜索  -->
+    <select id="getEntity2New" resultMap="NewsResultMap" parameterType="cn.hhu.lewen.dao.pojo.ForSearch">
+        select DISTINCT
+        news.new_id,news.new_title,news.new_abstract,news.new_content
+        ,news.writer_id,author.writer_account,author.nickname
+        ,news.create_date,news.tags,news.category_id,category.category_name
+        ,news.views,news.stars,news.weight,news.title_voice
+        ,IF((SELECT count(1) FROM starinformation where news.new_id = starinformation.new_id and starinformation.user_id = #{userId} limit 1 ),1,0) as ifStar
+
+        from entity2new,news,author,category
+        where entity in
+        <foreach collection="entities" item="entity" index="index" open="(" close=")" separator=",">
+            #{entity}
+        </foreach>
+        and category.category_id = news.category_id  and author.writer_id = news.writer_id and entity2new.new_id=news.new_id
+        order by ifStar desc, news.weight desc, news.new_id asc
+    </select>
+
+    <select id="getArticles" resultMap="NewsResultMap" parameterType="java.lang.String" >
+      select
+            news.new_id,news.new_title,news.new_abstract,news.new_content
+           ,news.writer_id,author.writer_account,author.nickname
+           ,news.create_date,news.tags,news.category_id,category.category_name
+           ,news.views,news.stars,news.weight,news.title_voice
+           ,IF((SELECT count(1) FROM starinformation where news.new_id = starinformation.new_id and starinformation.user_id = #{userId} limit 1 ),1,0) as ifStar
+
+      from news,author,category
+      where category.category_id = news.category_id  and author.writer_id = news.writer_id
+      order by ifStar desc, news.weight desc, news.new_id asc
+    </select>
+
+<!--    推荐数组寻找文章 -->
+    <select id="getArticlesByNewId" resultMap="NewsResultMap" parameterType="java.lang.String" >
+        select
+            news.new_id,news.new_title,news.new_abstract,news.new_content
+             ,news.writer_id,author.writer_account,author.nickname
+             ,news.create_date,news.tags,news.category_id,category.category_name
+             ,news.views,news.stars,news.weight,news.title_voice
+             ,IF((SELECT count(1) FROM starinformation where news.new_id = starinformation.new_id and starinformation.user_id = #{userId} limit 1 ),1,0) as ifStar
+
+        from news,author,category
+        where news.new_id in
+        <foreach collection="rmdArray" item="newId" index="index" open="(" close=")" separator=",">
+            #{newId}
+        </foreach>
+             and category.category_id = news.category_id  and author.writer_id = news.writer_id
+
+    </select>
+
+  <select id="getBrowsingHistoryByUserId" resultMap="NewsResultMap" parameterType="java.lang.String">
+    select
+        news.new_id,news.new_title,news.new_abstract,news.new_content
+        ,news.writer_id,author.writer_account,author.nickname
+        ,news.create_date,news.tags,news.category_id,category.category_name
+        ,news.views,news.stars,news.weight,news.title_voice
+        ,viewhistory.view_time
+        ,IF((SELECT count(1) FROM starinformation where news.new_id = starinformation.new_id and starinformation.user_id = #{userId} limit 1 ),1,0) as ifStar
+
+    from news,author,category,viewhistory
+    where viewhistory.user_id = #{userId} and
+          news.new_id = viewhistory.new_id and
+          category.category_id = news.category_id and
+          author.writer_id = news.writer_id
+    order by news.weight desc, news.new_id asc
+
+
+  </select>
+
+    <select id="getStarNewsByUserId" resultMap="NewsResultMap" parameterType="java.lang.String">
+        select
+            news.new_id,news.new_title,news.new_abstract,news.new_content
+             ,news.writer_id,author.writer_account,author.nickname
+             ,news.create_date,news.tags,news.category_id,category.category_name
+             ,news.views,news.stars,news.weight,news.title_voice
+             ,starinformation.star_time
+             ,IF((SELECT count(1) FROM starinformation where news.new_id = starinformation.new_id and starinformation.user_id = #{userId} limit 1 ),1,0) as ifStar
+
+        from news,author,category,starinformation
+        where starinformation.user_id = #{userId} and
+            news.new_id = starinformation.new_id and
+            category.category_id = news.category_id and
+            author.writer_id = news.writer_id
+        order by news.weight desc, news.new_id asc
+
+    </select>
+
+
+
+
+
+
+<!--    面对新的项，采用插入-->
+    <insert id="addNewViewItem" parameterType="cn.hhu.lewen.dao.vo.params.ViewHistoryParams">
+        insert into viewhistory(user_id,new_id,view_time,view_seconds)
+        values(#{userId,jdbcType=INTEGER},#{newId,jdbcType=INTEGER},#{viewTime},#{viewSeconds})
+    </insert>
+
+
+<!--面对已存在的项，选择更新其viewTime-->
+    <update id="updateViewItem" parameterType="cn.hhu.lewen.dao.vo.params.ViewHistoryParams">
+        update viewhistory
+            <set>
+                view_time=#{viewTime,jdbcType=TIMESTAMP}
+            </set>
+        where user_id=#{userId} and new_id=#{newId}
+    </update>
+
+<!--    收藏夹处理     ############################################################       -->
+    <!--    收藏，即插入-->
+    <insert id="addStarItem" parameterType="cn.hhu.lewen.dao.vo.params.IfStarParams">
+        insert into starinformation(user_id,new_id,star_time)
+        values(#{userId,jdbcType=INTEGER},#{newId,jdbcType=INTEGER},#{starTime})
+    </insert>
+
+
+    <!--取消收藏，即删除-->
+    <delete id="deleteStarItem" parameterType="cn.hhu.lewen.dao.vo.params.IfStarParams">
+        delete from starinformation
+        where user_id=#{userId} and new_id=#{newId}
+    </delete>
+<!--    做一个resultMap 来接收返回的收藏信息表项 -->
+    <resultMap id="StarItemResultMap" type="cn.hhu.lewen.dao.pojo.StarItem"  >
+        <id column="user_id" property="userId" jdbcType="INTEGER"  />
+        <id column="new_id" property="newId" jdbcType="INTEGER"  />
+
+        <result column="ifStar" property="ifStar" jdbcType="INTEGER" />
+
+        <result column="star_time" property="starTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="getStarItemByUserId" resultMap="StarItemResultMap" parameterType="java.lang.Integer">
+        select user_id,new_id,star_time,1 as ifStar
+        from starinformation
+        where user_id=#{userId}
+
+    </select>
+
+
+
+<update id="insertEntities" parameterType="java.lang.String">
+    update news
+    <set>
+        tags=#{entitiesString}
+    </set>
+    where new_id = #{newId}
+</update>
+
+    <insert id="insertEntity2New" parameterType="java.lang.String">
+        insert into entity2new(entity,new_id)
+        values(#{entity},#{newId})
+    </insert>
+
+<!--     For Web -->
+    <!-- 根据作者id找到他的作品   -->
+    <select id="getArticlesByWriterId" resultMap="NewsResultMap" parameterType="java.lang.String" >
+        select
+            news.new_id,news.new_title,news.new_abstract,news.new_content
+             ,news.writer_id,author.writer_account,author.nickname
+             ,news.create_date,news.tags,news.category_id,category.category_name
+             ,news.views,news.stars,news.weight,news.title_voice
+
+
+        from news,author,category
+        where category.category_id = news.category_id  and author.writer_id = news.writer_id and author.writer_id=#{writerId}
+        order by  news.weight desc, news.new_id asc
+    </select>
+
+<!--    展示某一类别的所有文章 -->
+    <select id="getArticlesByCategoryId" resultMap="NewsResultMap" parameterType="java.lang.String" >
+        select
+            news.new_id,news.new_title,news.new_abstract,news.new_content
+             ,news.writer_id,author.writer_account,author.nickname
+             ,news.create_date,news.tags,news.category_id,category.category_name
+             ,news.views,news.stars,news.weight,news.title_voice
+
+        from news,author,category
+        where category.category_id = news.category_id  and author.writer_id = news.writer_id and category.category_id = #{categoryId}
+        ORDER BY  news.weight DESC,news_new_id desc
+    </select>
+
+
+<!--    web端显示一个作者ID的浏览量，收藏量，发布量，作者排名 -->
+    <select id="getViewsByWriterId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(*)  from viewhistory,author,news
+        where
+            author.writer_id = #{writerId}
+          and author.writer_id = news.writer_id
+          and news.new_id = viewhistory.new_id
+    </select>
+
+    <select id="getStarsByWriterId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(*)  from starinformation,author,news
+        where
+            author.writer_id = #{writerId}
+          and author.writer_id = news.writer_id
+          and news.new_id = starinformation.new_id
+    </select>
+
+    <select id="getPublishByWriterId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT count(new_id)  from news,author
+        where author.writer_id=#{writerId}
+          and news.writer_id = author.writer_id
+    </select>
+
+    <resultMap id="RankResultMap" type="java.lang.String"  >
+
+        <result column="rowNum1" property="rank" jdbcType="INTEGER" />
+
+    </resultMap>
+
+    <select id="getRankByWriterId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+
+    SELECT rowNum1  from
+    (select a.writer_id,(@rowNum1:=@rowNum1+1) AS rowNum1
+    from (SELECT author.writer_id, count(*) AS cnt from news ,author
+    where news.writer_id = author.writer_id
+    GROUP BY author.writer_id
+    ORDER BY cnt) AS a,(SELECT (@rowNum1 :=0) ) b1 ) as ranklist
+    where writer_id = #{writerId}
+    </select>
+
+    <insert id="uploadArticles" parameterType="cn.hhu.lewen.dao.pojo.News">
+        INSERT INTO news ( new_title, new_abstract, new_content, writer_id, create_date, category_id, tags, views, stars, weight )
+        VALUES
+            (#{newTitle},#{newAbstract},#{newContent},#{writerId},NOW(),#{categoryId},#{tags},0,0,0)
+        <selectKey keyProperty="newId" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+<!--    传入writerId 和往前推subMonth的月数 0为当前月-->
+    <select id="getViewMonthData" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(*)  from viewhistory,author,news
+        where
+            author.writer_id = #{writerId}
+          and author.writer_id = news.writer_id
+          and news.new_id = viewhistory.new_id
+          and 	date_format( view_time, '%Y-%m' ) = date_format( DATE_SUB( curdate( ), INTERVAL #{subMonth} MONTH ), '%Y-%m' )
+    </select>
+
+    <select id="getStarMonthData" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(*)  from starinformation,author,news
+        where
+            author.writer_id = #{writerId}
+          and author.writer_id = news.writer_id
+          and news.new_id = starinformation.new_id
+          and 	date_format( star_time, '%Y-%m' ) = date_format( DATE_SUB( curdate( ), INTERVAL #{subMonth} MONTH ), '%Y-%m' )
+    </select>
+
+
+
+</mapper>

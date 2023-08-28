@@ -1,0 +1,20 @@
+<!--pages/user/userInfo/userInfo.wxml-->
+<view catchtouchstart="touchEvent.start" catchtouchmove="touchEvent.move" catchtouchend="touchEvent.end" catchtouchcancel="touchEvent.cancel">
+  <view class="user-info {{ activeId == -1 ? 'user-info-on' : '' }}">
+    <view class="user-img">
+      <van-icon name="user-circle-o" custom-class="image" size="60"/>
+    </view>
+    <view class='user-name'><text>{{nickname ? nickname: "微信用户"}}</text></view>
+  </view>
+  <van-cell-group inset>
+    <van-field model:value="{{ nickname }}" label="昵称" placeholder="请输入昵称" input-align="right" focus="{{activeId == 0 && inputStatus}}" id="item0" maxlengh="20" custom-style="{{ activeId == 0 ? 'background-color: #E25E3C' : '' }}"/>
+    <van-field model:value="{{ userAge }}" label="年龄" placeholder="请输入年龄" input-align="right" focus="{{activeId == 1 && inputStatus}}" id="item1" maxlengh="20" custom-style="{{ activeId == 1 ? 'background-color: #E25E3C' : '' }}"/>
+    <van-field model:value="{{ userSex }}" label="性别" placeholder="请输入性别" input-align="right" readonly id="item2" maxlengh="20"  custom-style="{{ activeId == 2 ? 'background-color: #E25E3C' : '' }}"/>
+    <van-field model:value="{{ userTel }}" label="电话" placeholder="请输入电话" input-align="right" focus="{{activeId == 3 && inputStatus}}" id="item3" maxlengh="20" custom-style="{{ activeId == 3 ? 'background-color: #E25E3C' : '' }}"/>
+    <van-field model:value="{{ userProvince }}" label="省份" placeholder="请输入您所在的省份" input-align="right" focus="{{activeId == 4 && inputStatus}}" id="item4" maxlengh="20" custom-style="{{ activeId == 4 ? 'background-color: #E25E3C' : '' }}"/>
+    <van-field model:value="{{ userCity }}" label="市" placeholder="请输入您所在的市" input-align="right" focus="{{activeId == 5 && inputStatus}}" id="item5" maxlengh="20" custom-style="{{ activeId == 5 ? 'background-color: #E25E3C' : '' }}"/>
+    <van-field model:value="{{ userMail }}" label="邮箱" placeholder="请输入您的邮箱" input-align="right" focus="{{activeId == 6 && inputStatus}}" id="item6" maxlengh="20" custom-style="{{ activeId == 6 ? 'background-color: #E25E3C' : '' }}"/>
+  </van-cell-group>
+  <view class="viewEnd"> 列表结束了 </view>
+</view>
+

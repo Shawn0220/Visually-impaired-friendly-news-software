@@ -1,0 +1,11 @@
+<!--pages/more/more.wxml-->
+<view class="mainView" catchtouchstart="touchEvent.start" catchtouchmove="touchEvent.move" catchtouchend="touchEvent.end" catchtouchcancel="touchEvent.cancel">
+  <view class="functionItem" style="background-color: {{ activeId == index ? 'rgb(226, 94, 60)': 'rgb(187, 230, 138)' }};">
+    {{item}}
+  </view>
+  <view class="function-item {{ activeId == index ? 'focusOn':'' }}"  wx:for="{{functionList}}" wx:key="index" id="{{'item' + index}}">
+    <view class="my-icon"><van-icon name="{{ functionIcon[index] }}" size="30px"/></view>
+    <view class="my-text"><text>{{ item }}</text></view>
+  </view>
+  <view class="viewEnd"> 功能底部 </view>
+</view>

@@ -1,0 +1,9 @@
+<!--pages/categories/categories.wxml-->
+
+<view catchtouchstart="touchEvent.start" catchtouchmove="touchEvent.move" catchtouchend="touchEvent.end" catchtouchcancel="touchEvent.cancel">
+  <view class="scroll">
+    <categoryItem wx:for="{{categorys}}" categoryData="{{item}}" wx:key="index" id="{{ 'item' + index }}" myStyle="{{ activeId == index? 'background-color: #E25E3C; color: #FFFFFF;': 'background-color: #8CE48C;' }}"></categoryItem>
+    <image wx:if="{{categorys.length == 0}}" src="/static/images/icon/empty.svg"></image>
+    <view class="categoryEnd"> 分类结束了 </view>
+  </view>
+</view>

@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Main-Class: cn.hhu.lewen.LeWenApplication
+Class-Path: mybatis-plus-extension-3.4.3.jar jackson-annotations-2.13.3.
+ jar mybatis-plus-core-3.4.3.jar spring-session-core-2.1.4.RELEASE.jar s
+ pring-boot-starter-jdbc-2.7.0.jar mybatis-plus-3.4.3.jar spring-jcl-5.3
+ .20.jar log4j-jul-2.17.2.jar spring-context-5.3.20.jar spring-jdbc-5.3.
+ 20.jar commons-lang3-3.12.0.jar snakeyaml-1.30.jar spring-expression-5.
+ 3.20.jar jackson-core-2.13.3.jar slf4j-api-1.7.36.jar jul-to-slf4j-1.7.
+ 36.jar mysql-connector-java-8.0.29.jar spring-boot-2.7.0.jar spring-boo
+ t-starter-json-2.7.0.jar joda-time-2.10.10.jar spring-boot-configuratio
+ n-processor-2.7.0.jar jackson-datatype-jsr310-2.13.3.jar spring-beans-5
+ .3.20.jar mybatis-spring-boot-starter-2.2.2.jar spring-aop-5.3.20.jar s
+ pring-boot-starter-2.7.0.jar spring-boot-starter-log4j2-2.7.0.jar mybat
+ is-spring-2.0.7.jar spring-boot-starter-web-2.7.0.jar log4j-api-2.17.2.
+ jar spring-webmvc-5.3.20.jar mybatis-plus-annotation-3.4.3.jar lombok-1
+ .18.24.jar log4j-slf4j-impl-2.17.2.jar jackson-databind-2.13.3.jar myba
+ tis-3.5.9.jar spring-tx-5.3.20.jar javax.servlet-api-4.0.1.jar mybatis-
+ spring-boot-autoconfigure-2.2.2.jar spring-core-5.3.20.jar fastjson-1.2
+ .76.jar commons-collections-3.2.2.jar mybatis-plus-boot-starter-3.4.3.j
+ ar HikariCP-4.0.3.jar jakarta.annotation-api-1.3.5.jar jackson-datatype
+ -jdk8-2.13.3.jar log4j-core-2.17.2.jar spring-boot-autoconfigure-2.7.0.
+ jar spring-web-5.3.20.jar jsqlparser-4.0.jar jackson-module-parameter-n
+ ames-2.13.3.jar
+

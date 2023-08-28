@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.hhu.lewen.dao.mapper.CategoryMapper" >
+  <!--
+        这里是自动生成的resultMap,用于映射对象时,数据库列名与对象名不一一对应时,而存在的解决方案
+        即把列名与映射对象的属性名一一对应起来,使得可以实现列名与对象名不一致也一样可以映射
+        注意:
+          因为都是逆向工程生成的,我们必须遵循一些规则:
+          1. 数据库表的列名是单个单词时, 实体类对象的属性会与列名同名
+          2. 数据库表的列名是多个单词且用_连接时,例如user_name,  实体类对象的属性会依照驼峰命名法删除_,例如userName
+          3. 数据库表的列名是多个单词且直接连接时,例如userName,username , 实体类对象的属性会全小写,例如username
+
+          因为属性名不采取驼峰命名法是不合理的, 所以要尽量避免第三种情况
+   -->
+  <resultMap id="BaseResultMap" type="cn.hhu.lewen.dao.pojo.Category" >
+    <id column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="NewsResultMap" type="cn.hhu.lewen.dao.pojo.News"  >
+    <id column="new_id" property="newId" jdbcType="INTEGER"  />
+    <result column="new_title" property="newTitle" jdbcType="VARCHAR" />
+    <result column="new_abstract" property="newAbstract" jdbcType="VARCHAR" />
+    <result column="new_content" property="newContent" jdbcType="VARCHAR" />
+    <result column="writer_id" property="writerId" jdbcType="INTEGER" />
+    <result column="writer_account" property="writerAccount" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="views" property="views" jdbcType="INTEGER" />
+    <result column="stars" property="stars" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="INTEGER" />
+    <result column="title_voice" property="titleVoice" jdbcType="VARCHAR" />
+    <result column="ifStar" property="ifStar" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    Cid,Cname,Cimgurl,Cdescribe
+  </sql>
+
+  <select id="getAllCategories" resultMap="BaseResultMap" >
+    select
+      category_id,category_name,img_url,category.describe
+    from category
+  </select>
+
+  <select id="selectCategoryById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from category
+    where id = #{id}
+  </select>
+
+  <select id="getCategoryDetailsByCategoryId" resultMap="NewsResultMap" parameterType="java.lang.String" >
+    select
+      news.new_id,news.new_title,news.new_abstract,news.new_content
+         ,news.writer_id,author.writer_account,author.nickname
+         ,news.create_date,news.tags,news.category_id,category.category_name
+         ,news.views,news.stars,news.weight,news.title_voice
+         ,IF((SELECT count(1) FROM starinformation where news.new_id = starinformation.new_id and starinformation.user_id = #{userId} limit 1 ),1,0) as ifStar
+
+    from news,author,category
+    where category.category_id = news.category_id  and author.writer_id = news.writer_id and category.category_id = #{categoryId}
+    ORDER BY ifStar DESC, news.weight DESC
+  </select>
+
+<!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >-->
+<!--    delete from t_sb_user-->
+<!--    where id = #{id,jdbcType=INTEGER}-->
+<!--  </delete>-->
+<!--  <insert id="insert" parameterType="com.mlming.springboot.entity.User" >-->
+<!--    insert into t_sb_user (id, user_name, user_age-->
+<!--      )-->
+<!--    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userAge,jdbcType=INTEGER}-->
+<!--      )-->
+<!--  </insert>-->
+
+<!--  &lt;!&ndash;-->
+<!--    这种逆向工程生成的,带有Selective字眼的,基本上就是使用MyBatis的动态sql这一语法-->
+<!--    实现一个sql语句可以根据传递参数的不同,而有不同的结果-->
+<!--    即: Selective:选择性的-->
+<!--    这一点值得我们去学习-->
+<!--  &ndash;&gt;-->
+
+<!--  <insert id="insertSelective" parameterType="com.mlming.springboot.entity.User" >-->
+<!--    insert into t_sb_user-->
+<!--    <trim prefix="(" suffix=")" suffixOverrides="," >-->
+<!--      <if test="id != null" >-->
+<!--        id,-->
+<!--      </if>-->
+<!--      <if test="userName != null" >-->
+<!--        user_name,-->
+<!--      </if>-->
+<!--      <if test="userAge != null" >-->
+<!--        user_age,-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--    <trim prefix="values (" suffix=")" suffixOverrides="," >-->
+<!--      <if test="id != null" >-->
+<!--        #{id,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="userName != null" >-->
+<!--        #{userName,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="userAge != null" >-->
+<!--        #{userAge,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--  </insert>-->
+<!--  <update id="updateByPrimaryKeySelective" parameterType="com.mlming.springboot.entity.User" >-->
+<!--    update t_sb_user-->
+<!--    <set >-->
+<!--      <if test="userName != null" >-->
+<!--        user_name = #{userName,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="userAge != null" >-->
+<!--        user_age = #{userAge,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--    </set>-->
+<!--    where id = #{id,jdbcType=INTEGER}-->
+<!--  </update>-->
+<!--  <update id="updateByPrimaryKey" parameterType="com.mlming.springboot.entity.User" >-->
+<!--    update t_sb_user-->
+<!--    set user_name = #{userName,jdbcType=VARCHAR},-->
+<!--      user_age = #{userAge,jdbcType=INTEGER}-->
+<!--    where id = #{id,jdbcType=INTEGER}-->
+<!--  </update>-->
+</mapper>

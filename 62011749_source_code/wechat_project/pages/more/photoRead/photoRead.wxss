@@ -1,0 +1,32 @@
+/* pages/more/photoRead/photoRead.wxss */
+Page {
+  background-color: #8CE48C !important;
+  font-weight: 600;
+}
+.mainView {
+  height: 100%;
+}
+.myCamera {
+  width: 100%;
+  height: 700px;
+}
+.myImage {
+  width: 100%;
+  height: 700px;
+}
+.function-item {
+  height: 150rpx;
+  margin: 5% 10%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+}
+.my-icon {
+  display: inline;
+}
+.my-text {
+  display: inline;
+  margin-left: 5%;
+}

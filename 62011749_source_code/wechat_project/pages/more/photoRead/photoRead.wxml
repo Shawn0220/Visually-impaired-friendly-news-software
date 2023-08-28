@@ -1,0 +1,13 @@
+<!--pages/more/photoRead/photoRead.wxml-->
+<view class="mianView" catchtouchstart="touchEvent.start" catchtouchmove="touchEvent.move" catchtouchend="touchEvent.end" catchtouchcancel="touchEvent.cancel">
+  <view class="function-item">
+    <view class="my-icon"><van-icon name="photo-o" size="30px"/></view>
+    <view class="my-text"><text>拍照阅读</text></view>
+  </view>
+  <view>
+    <camera wx:if="{{ showCamera }}" class="myCamera" resolution="high" device-position="back" 	flash="auto" frame-size="large" bindinitdone="cameraInitDone"/>
+  </view>
+  <view>
+    <image wx:if="{{ !showCamera }}" class="myImage" mode="aspectFit" src="{{ src }}"></image>
+  </view>
+</view>

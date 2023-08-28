@@ -1,0 +1,55 @@
+/* components/articleItem/articleItem.wxss */
+@import '/miniprogram_npm/@vant/weapp/common/index.wxss';
+.articleItem {
+  min-height: 200rpx;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  background-color: #FFFFFF;
+}
+.articleTitle {
+  font-weight: 600;
+}
+.articleSummary {
+  font-size: 25rpx;
+  margin-top: 1%;
+}
+.articleTags {
+  margin-top: 1%;
+}
+.tag {
+  margin-right: 20rpx;
+}
+.authorAndView {
+  display: flex;
+  align-items: center;
+  margin-top: 1%;
+}
+.author {
+  display: flex;
+  align-items:center;
+  width: 50%;
+}
+.viewData {
+  width: 50%;
+  text-align: right;
+}
+.view {
+  margin: 0% 5%;
+  display: inline;
+}
+.stars {
+  margin-left: 5%;
+  display: inline;
+}
+.articleDate {
+  margin-top: 1%;
+}
+.text {
+  margin-left: 4%;
+}
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+    Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
+    sans-serif;
+}

@@ -1,0 +1,12 @@
+<!--components/categoryItem/categoryItem.wxml-->
+<view class="categoryItem" style="{{myStyle}}">
+  <image src="{{ 'http://eos-wuxi-1.cmecloud.cn/spencer' + categoryData.imgUrl }}" mode="scaleToFill" class="categoryImage" ></image>
+  <view class="categoryData">
+    <view class="categoryName">
+      <text>{{categoryData.categoryName}}</text>
+    </view>
+    <view class="van-multi-ellipsis--l3 detail">
+      {{categoryData.describe}}
+    </view>
+  </view>
+</view>

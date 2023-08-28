@@ -1,0 +1,17 @@
+<!--components/searchItem/searchItem.wxml-->
+<view class="container" style="{{ myStyle }}">
+  <view>
+    <van-field value="{{ searchText }}" placeholder="请输入搜索内容" left-icon="search" custom-style="border-radius: 10rpx; font-weight: 600;" focus="{{ focusInput }}" bind:change="onChange"/>
+  </view>
+  <view class="reminding"> 长按开始语音输入 </view>
+  <van-popup show="{{showRecode}}" round custom-style="background-color: rgba(1,1,1,0)">
+    <view class="myRecode">
+      <view class="recode">
+        <text>正在录音</text>
+        <view class="ripple"></view>
+        <view class="ripple" animation="{{animationData1}}"></view>
+        <view class="ripple" animation="{{animationData2}}"></view>
+      </view>
+    </view>
+  </van-popup>
+</view>

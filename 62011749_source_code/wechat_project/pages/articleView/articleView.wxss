@@ -1,0 +1,83 @@
+/* pages/articleView/articleView.wxss */
+.row_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title_text {
+  margin: 2%;
+  min-width: 96%;
+  font-weight: 600;
+  border-radius: 10rpx;
+  display: inline;
+}
+.authorAndView {
+  display: flex;
+  align-items: center;
+  margin: 2%;
+  font-weight: 400;
+  border-radius: 10rpx;
+}
+.author {
+  display: flex;
+  align-items:center;
+  margin: 0% 5%;
+  width: 40%;
+  border-radius: 10rpx;
+}
+.viewData {
+  margin: 0% 5%;
+  width: 40%;
+  text-align: right;
+  border-radius: 10rpx;
+}
+.view {
+  margin: 0% 5%;
+  display: inline;
+  border-radius: 10rpx;
+}
+.stars {
+  margin-left: 5%;
+  display: inline;
+  border-radius: 10rpx;
+}
+.abstractContent {
+  margin: 2%;
+  padding: 2%;
+  border-radius: 10rpx;
+  background-color: rgb(223, 220, 212);
+  border-radius: 10rpx;
+}
+.contentArea {
+  margin: 2%;
+  padding: 2%;
+  border-radius: 10rpx;
+  background-color: rgb(223, 220, 212);
+  border-radius: 10rpx;
+}
+.category {
+  margin: 0% 5% 2%;
+  border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+}
+.articleTags {
+  margin: 0% 5% 2%;
+  border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+}
+.articleDate {
+  margin: 0% 5% 2%;
+  border-radius: 10rpx;
+}
+.tag {
+  margin-right: 2%;
+  border-radius: 10rpx;
+}
+.viewEnd {
+  margin: 5% 2%;
+  border-radius: 10rpx;
+  background-color: rgb(140, 228, 140);
+  border-radius: 10rpx;
+}

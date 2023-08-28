@@ -1,0 +1,53 @@
+<!--components/articleItem/articleItem.wxml-->
+<view class="articleItem" style="{{ myStyle }}">
+  <!-- <van-skeleton wx:if="{{loading}}" title row="3" /> -->
+  <van-row>
+    <van-col span="20">
+      <view class="articleTitle">
+        <view>
+          {{articleData.newTitle}}
+        </view>
+      </view>
+    </van-col>
+    <van-col span="4" style="text-align: right;">
+      <van-tag type="danger" round="true" wx:if="{{articleData.weight >= 1}}">置顶</van-tag>
+    </van-col>
+  </van-row>
+  <van-row>
+    <view class="articleSummary">
+        <view>
+          {{articleData.newAbstract}}
+        </view>
+    </view>
+  </van-row>
+  <van-row>
+    <view class="articleTags">
+      <van-tag type="success" round="true" class="tag">{{articleData.category.categoryName}}</van-tag>
+      <van-tag type="success" round="true" class="tag" wx:for="{{articleData.tags}}" wx:key="index">{{item}}</van-tag>
+    </view>
+  </van-row>
+  <van-row>
+    <view class="authorAndView">
+      <view class="author">
+        <van-icon name="manager" />
+        <text class="text">{{ articleData.author.nickname }}</text>
+      </view>
+      <view class="viewData">
+        <view class="view">
+          <van-icon name="eye-o"/>
+          <text class="text">{{ articleData.views }}</text>
+        </view>
+        <view class="stars">
+          <van-icon name="star" color="{{articleData.ifStar == 1 ? '#ffff00':''}}"/>
+          <text class="text">{{ articleData.stars }}</text>
+        </view>
+      </view>
+    </view>
+  </van-row>
+  <van-row>
+    <view class="articleDate">
+      <van-icon name="clock" />
+      <text class="text">{{ articleData.createDate }}</text>
+    </view>
+  </van-row>
+</view>

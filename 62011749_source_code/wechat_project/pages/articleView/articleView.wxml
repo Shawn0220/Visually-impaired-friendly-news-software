@@ -1,0 +1,57 @@
+<!--pages/articleView/articleView.wxml-->
+<view catchtouchstart="touchEvent.start" catchtouchmove="touchEvent.move" catchtouchend="touchEvent.end" catchtouchcancel="touchEvent.cancel">
+  <van-row class="row_center">
+    <view class="title_text" id="newTitle">
+      <view style="background-color: {{ dataList[activeId] == 'newTitle' ? 'rgb(226, 94, 60)':''}};">
+        <text>{{ articleData.newTitle }}</text>
+      </view>
+    </view>
+  </van-row>
+  <van-row>
+    <view class="authorAndView">
+      <view class="author" id="author" style="background-color: {{ dataList[activeId] == 'author' ? 'rgb(226, 94, 60)':''}};">
+        <van-icon name="manager" size="50rpx"/>
+        <text class="authorText">{{ articleData.author.nickname }}</text>
+      </view>
+      <view class="viewData">
+        <view class="view" id="views" style="background-color: {{ dataList[activeId] == 'views' ? 'rgb(226, 94, 60)':''}};">
+          <van-icon name="eye" style="margin-right: 2%;"/>
+          <text>{{ articleData.views }}</text>
+        </view>
+        <view class="stars" id="stars" style="background-color: {{ dataList[activeId] == 'stars' ? 'rgb(226, 94, 60)':''}};" >
+          <van-icon name="star" style="margin-right: 2%;" color="{{articleData.ifStar == 1 ? '#ffff00':''}}"/>
+          <text>{{ articleData.stars }}</text>
+        </view>
+      </view>
+    </view>
+  </van-row>
+  <van-row class="row_center">
+    <view class="abstractContent" id="newAbstract" style="background-color: {{ dataList[activeId] == 'newAbstract' ? 'rgb(226, 94, 60)':''}};">{{ articleData.newAbstract }}</view>
+  </van-row>
+  <van-row>
+    <view class="category" id="category" style="background-color: {{ dataList[activeId] == 'category' ? 'rgb(226, 94, 60)':''}};">
+      <text>分类：</text><van-tag type="success" round="true" class="tag">{{ articleData.category.categoryName }}</van-tag>
+    </view>
+  </van-row>
+  <van-row>
+    <view class="articleTags" id="tags" style="background-color: {{ dataList[activeId] == 'tags' ? 'rgb(226, 94, 60)':''}};">
+      标签：<van-tag type="success" round="true" class="tag" wx:for="{{ articleData.tags }}" wx:key="index">{{item}}</van-tag>
+    </view>
+  </van-row>
+  <van-row>
+    <view class="articleDate" id="createDate" style="background-color: {{ dataList[activeId] == 'createDate' ? 'rgb(226, 94, 60)':''}};">
+      时间：{{ articleData.createDate }}
+    </view>
+  </van-row>
+  <van-row class="row_center">
+    <van-col span="24">
+      <view class="contentArea" id="newContent" style="background-color: {{ dataList[activeId] == 'newContent' ? 'rgb(226, 94, 60)':''}};">
+        {{ articleData.newContent }}
+      </view>
+    </van-col>
+  </van-row>
+  <image wx:if="{{ loading }}" src="/static/images/icon/empty.svg"></image>
+  <van-row class="row_center viewEnd">
+    <view > 文章结束了 </view>
+  </van-row>
+</view>

@@ -1,0 +1,34 @@
+/* pages/user/userInfo/userInfo.wxss */
+page {
+  background-color: #8CE48C;
+  font-weight: 600;
+}
+.user-info {
+  margin: 10% 2% ;
+  height: 210rpx;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-img {
+  display: inline;
+}
+.user-name {
+  margin-left: 10%;
+  font-size: 50rpx;
+  display: inline;
+}
+.viewEnd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5% 0%;
+  border-radius: 10rpx;
+  background-color: white;
+}
+.user-info-on {
+  background-color: #E25E3C;
+  color: #FFFFFF;
+}

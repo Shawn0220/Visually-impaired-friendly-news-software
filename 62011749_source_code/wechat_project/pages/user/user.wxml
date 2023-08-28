@@ -1,0 +1,17 @@
+<view class="mainView" catchtouchstart="touchEvent.start" catchtouchmove="touchEvent.move" catchtouchend="touchEvent.end" catchtouchcancel="touchEvent.cancel">
+  <view class="user-info {{ activeId == 0 ? 'focusOn':'' }}">
+    <view class="user-img">
+      <van-icon name="user-circle-o" custom-class="image" size="60"/>
+    </view>
+    <view class='user-name'><text>{{nickname ? nickname: "微信用户"}}</text></view>
+  </view>
+  <view class="function-item {{ activeId == 1 ? 'focusOn':'' }}">
+    <view class="my-icon"><van-icon name="todo-list-o" size="30px"/></view>
+    <view class="my-text"><text>浏览记录</text></view>
+  </view>
+  <view class="function-item {{ activeId == 2 ? 'focusOn':'' }}">
+    <view class="my-icon"><van-icon name="star-o" size="30px"/></view>
+    <view class="my-text"><text>收藏记录</text></view>
+  </view>
+  <view class="viewEnd"> 已经到达底部了 </view>
+</view>

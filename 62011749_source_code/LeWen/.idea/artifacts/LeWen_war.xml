@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="LeWen:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>LeWen</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="LeWen.war">
+      <element id="artifact" artifact-name="LeWen:war exploded" />
+    </root>
+  </artifact>
+</component>

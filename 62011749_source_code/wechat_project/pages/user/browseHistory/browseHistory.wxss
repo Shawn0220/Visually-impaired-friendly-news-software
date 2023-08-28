@@ -1,0 +1,33 @@
+/* pages/user/browseHistory/browseHistory.wxss */
+.scroll {
+  margin: 0% 3%;
+  width: 94%;
+  margin-bottom: 200rpx;
+  min-height: 100%;
+}
+.function-item {
+  height: 150rpx;
+  margin: 5% 0% 5%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #8CE48C;
+  font-size: 50rpx;
+  font-weight: 600;
+}
+.my-icon {
+  display: inline;
+}
+.my-text {
+  display: inline;
+  margin-left: 5%;
+}
+.viewEnd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5% 0%;
+  border-radius: 10rpx;
+  background-color: #8CE48C;
+}
